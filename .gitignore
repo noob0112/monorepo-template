@@ -1,0 +1,15 @@
+node_modules
+
+# Code build folder
+.dist
+dist
+dist-ssr
+build
+
+**/db/data
+
+yarn.lock
+npm-debug.log*
+.pnpm-error.log*
+.pnpm-debug.log
+tests/**/coverage/
