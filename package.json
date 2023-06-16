@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "backend": "pnpm --filter './app/backend/**'",
+    "backend:core": "pnpm --filter=core-backend",
+    "web": "pnpm --filter './app/web/**'",
+    "web:nuxt-web1": "pnpm --filter nuxt-web-1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
