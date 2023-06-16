@@ -1,0 +1,33 @@
+version: '3.6'
+services:
+  database:
+    container_name: postgres
+    image: postgres:14.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+    ports:
+      - '5432:5432'
+    networks:
+      - monorepo
+    volumes: 
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+  api:
+    container_name: express-typescript-docker
+    env_file:
+      - ../.env
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    networks:
+      - monorepo
+    # volumes:
+    #   - ../:/home/node/app
+    #   - /home/node/app/node_modules
+    ports:
+      - '2021:2021'
+
+networks:
+  monorepo:
+    
