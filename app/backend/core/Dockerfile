@@ -9,14 +9,11 @@ WORKDIR /home/node/app
 
 COPY --chown=node:node package.json ./
 
-RUN pnpm install
-
 COPY --chown=node:node . .
 
-RUN pnpm prisma:generate
-
-RUN pnpm build
-
+RUN pnpm install \
+    && pnpm prisma:generate \
+    && pnpm build
 RUN pnpm install --prod  --force
 
 FROM node:18-alpine as product
