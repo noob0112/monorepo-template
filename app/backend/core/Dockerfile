@@ -1,27 +1,25 @@
-FROM node:18-alpine as builder
+FROM node:18-alpine as base
 
 RUN npm init --yes && \
     npm install -g pnpm
+
+FROM base as builder
 
 USER node
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node package.json ./
-
 COPY --chown=node:node . .
 
 RUN pnpm install \
-    && pnpm prisma:generate \
-    && pnpm build
-RUN pnpm install --prod  --force
+    && pnpm build \
+    && rm -rf ./node_modules/.pnpm \
+    && pnpm i --prod \
+    && npx prisma && pnpm prisma:generate
 
-FROM node:18-alpine as product
+FROM base as product
 
 EXPOSE 2021
-
-RUN npm init --yes && \
-    npm install -g pnpm
 
 USER node
 
